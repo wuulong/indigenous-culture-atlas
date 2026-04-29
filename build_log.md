@@ -1,0 +1,19 @@
+# Build Log (專案建置與異動紀錄)
+
+本檔案記錄 `indigenous-culture-atlas` 專案的版本演進、資料匯入與書本產製歷程。
+
+---
+
+## [v0.1.0-alpha] - 2026-04-29
+### 🚀 Added
+- **架構初始化**：建立「內私外公」Repo 目錄結構。
+- **Schema v2.1**：完成包含 11 張核心表的 SQLite 初始化腳本，支援族群、部落、文化資產、知識圖譜、人物與族語詞彙。
+- **專書大綱 (TOC)**：完成《數位民族誌方法論》架構，採數據驅動 (Data-Driven) 導向。
+- **管理規範**：產出設計規格書、實作計畫、傳統領域 SOP、AI 協作指引。
+
+### ⚙️ Build Activities
+- **Git Submodule Initialization**: 成功掛載公開 Repo 並推送初始內容。
+- **Open Data Discovery**: 辨識出「核定部落」、「人口統計」與「傳統領域」三大核心數據來源連結。
+
+---
+*Next Step: 執行階段一：排灣族種子資料匯入腳本編寫。*
