@@ -86,6 +86,23 @@
 
 ---
 
+## 8. 數據標準化與分析就緒規範 (Data Standardization & Analytical Ready)
+
+### 8.1 建議的 Meta Data JSON 鍵值清單
+為了確保未來分析系統能解析 `meta_data` 欄位，AI 錄入時應優先使用以下 Key：
+- **媒體類 (`media_info`)**：`{"mimetype": "image/jpeg", "width": 1920, "height": 1080, "duration": 120}`
+- **田野筆記 (`field_notes`)**：`{"observer": "Name", "date": "YYYY-MM-DD", "location_precision": "high"}`
+- **技術細節 (`tech_specs`)**：`{"material": ["wood", "rattan"], "technique": "weaving", "complexity": 3}`
+- **語意摘要 (`semantic_summary`)**：專供 RAG 使用的純文字摘要，包含高密度關鍵字。
+
+### 8.2 平行敘事與衝突處理邏輯
+當同一文化資產具備多個衝突版本時：
+1. **多筆錄入**：針對不同來源分別建立 `cultural_assets` 紀錄，透過 `source_id` 區分。
+2. **衝突標籤**：在 `meta_data` 加入 `{"narrative_group": "Group_A", "conflict_with": [id1, id2]}`。
+3. **分析系統行為**：系統應具備「並排顯示」功能，而非強制選擇單一真相。
+
+---
+
 ## 4. 實例操作建議
 
 ### 記錄「排灣族」案例：

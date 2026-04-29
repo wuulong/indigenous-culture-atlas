@@ -1,7 +1,8 @@
 -- [修訂版] 原住民文化體系 SQLite 初始化腳本
 -- 強化點：多對多族群關聯 (1)、全面證據溯源 (5)、各表擴充彈性 (meta_data)
 
--- 1. 文獻與參考資料
+-- 1. 文獻與參考資料 (The Evidence Layer)
+-- AI 指引：所有核心表單均需透過 source_id 連結此表。這是數據信實性的唯一來源。
 CREATE TABLE IF NOT EXISTS references_source (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
@@ -13,7 +14,8 @@ CREATE TABLE IF NOT EXISTS references_source (
     meta_data TEXT                  -- JSON 格式擴充欄位
 );
 
--- 2. 族群基本定義
+-- 2. 族群基本定義 (The Ethnic Hierarchy)
+-- AI 指引：使用 parent_id 構建樹狀族群結構 (如: 排灣族 -> 拉瓦爾支系)。
 CREATE TABLE IF NOT EXISTS ethnic_groups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     parent_id INTEGER,               -- 指向父層族群 ID (支援支系)
@@ -28,7 +30,8 @@ CREATE TABLE IF NOT EXISTS ethnic_groups (
     FOREIGN KEY (source_id) REFERENCES references_source(id)
 );
 
--- 3. 部落/聚落 (空間核心)
+-- 3. 部落/聚落 (The Spatial Anchor)
+-- AI 指引：地景導讀的核心。poi_type 應包含 'Entrance' 以利觸發故事導讀模式。
 CREATE TABLE IF NOT EXISTS communities (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name_zh TEXT NOT NULL,
@@ -110,7 +113,8 @@ CREATE TABLE IF NOT EXISTS social_structures (
     FOREIGN KEY (source_id) REFERENCES references_source(id)
 );
 
--- 9. 文化知識連結表
+-- 9. 文化知識連結表 (The Knowledge Graph)
+-- AI 指引：用於建立非線性語意連結 (如: 人物-工藝, 神話-地點)。relation 應使用動詞。
 CREATE TABLE IF NOT EXISTS cultural_links (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source_type TEXT,    
@@ -157,7 +161,8 @@ CREATE TABLE IF NOT EXISTS lexicon (
     FOREIGN KEY (source_id) REFERENCES references_source(id)
 );
 
--- 12. 活動動態行事曆 (Event Calendar)
+-- 12. 活動動態行事曆 (The Temporal Awareness)
+-- AI 指引：用於實現「活動雷達」。AI 應定期掃描外部來源更新日期。
 CREATE TABLE IF NOT EXISTS cultural_events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     asset_id INTEGER,                -- 連結的文化資產 (如：某部落的豐年祭)
