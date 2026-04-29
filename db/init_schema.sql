@@ -153,7 +153,22 @@ CREATE TABLE IF NOT EXISTS lexicon (
     example_sentence TEXT,           -- 例句
     source_id INTEGER,               -- 來源引註
     meta_data TEXT,                  -- JSON 格式擴充
-    FOREIGN KEY (group_id) REFERENCES ethnic_groups(id),
     FOREIGN KEY (category_id) REFERENCES cultural_categories(id),
+    FOREIGN KEY (source_id) REFERENCES references_source(id)
+);
+
+-- 12. 活動動態行事曆 (Event Calendar)
+CREATE TABLE IF NOT EXISTS cultural_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    asset_id INTEGER,                -- 連結的文化資產 (如：某部落的豐年祭)
+    community_id INTEGER,            -- 發生地點 (冗餘儲存以便快速查詢)
+    event_name TEXT,                 -- 活動名稱 (可覆寫 asset 名稱)
+    start_date DATE,                 -- 開始日期
+    end_date DATE,                   -- 結束日期
+    status TEXT DEFAULT 'confirmed', -- 狀態: confirmed, estimated, cancelled
+    source_id INTEGER,               -- 來源 (如：部落粉專公告)
+    meta_data TEXT,                  -- JSON 格式擴充 (如：活動流程、注意事項)
+    FOREIGN KEY (asset_id) REFERENCES cultural_assets(id),
+    FOREIGN KEY (community_id) REFERENCES communities(id),
     FOREIGN KEY (source_id) REFERENCES references_source(id)
 );

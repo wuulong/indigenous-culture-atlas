@@ -60,10 +60,29 @@
 ### 3.2 自關聯階層模式 (Self-referencing Hierarchy)
 `ethnic_groups` 與 `cultural_categories` 均使用 `parent_id` 自關聯。
 - **目的**：能處理無限深度的分類與支系結構。
+- **RAG 串接**：此結構非常適合轉換為 LLM 的向量資料庫或 RAG 檢索底層。
 
 ### 3.3 彈性 Meta 模式 (JSON Metadata)
 所有資料表均保留 `meta_data` (TEXT) 欄位。
 - **目的**：解決結構化資料庫 (SQL) 難以應對非結構化資料 (NoSQL) 的問題，適合存儲抓取的原始 API 回應。
+
+---
+
+## 7. 高階應用與治理規範 (Advanced Application & Governance)
+
+### 7.1 時空感知與活動雷達 (Temporal Awareness)
+- **活動行事曆 (`cultural_events`)**：系統必須具備處理動態日期的能力，以支援「探勘不失之交臂」的需求。
+- **時空查詢邏輯**：系統應能執行 `(當前時間 + 附近座標) -> 推薦活動` 的複合查詢。
+
+### 7.2 故事導讀模式 (Storytelling Mode)
+- **地景感描述**：`cultural_assets` 中的敘事應具備「現地感」，包含對周邊河流、山脈與部落入口的指引性描述。
+- **敘事分級**：區分「全族共有神話」與「部落特有故事」。
+
+### 7.3 專案治理原則 (Governance)
+- **版本化管理**：DB 與專書共享 `VERSION` 號，確保數據與敘事的一致性。
+- **建置紀錄 (Build Log)**：所有資料變更與書本構建必須記錄於 `build_log.md`。
+- **內外解耦**：採用 Git Submodule 管理公開 Repo，落實「主目錄為內，子目錄為公」的治理策略。
+- **腳本驅動**：優先開發自動化工具 (Python/SQL) 處理資料，節省 Token 並確保可維護性。
 
 ---
 
